@@ -1,25 +1,19 @@
-import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { Home } from "./pages";
 
 export default function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const serverUrl = import.meta.env.VITE_SERVER_URL;
-      if (!serverUrl) {
-        console.error("Server URL not found");
-        return;
-      }
-      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}`);
-      const data = await response.json();
-      setMessage(data.message);
-    };
-    fetchData();
-  }, []);
   return (
     <div>
-      <h1>My Appp</h1>
-      <p>{message}</p>
+      <ToastContainer position="bottom-left" autoClose={1500} hideProgressBar />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<div>Not Found</div>} />
+        </Routes>
+      </Router>
     </div>
   );
 }
